@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>X,O Game</title>
+    <style>
+        .game {
+            width: 456px;
+            margin: auto;
+            color: #fff;
+            font-weight: 900;
+        }
+
+        #title.title {
+            background-color: #f25;
+            font-size: 50px;
+            margin: 30px auto 10px;
+            padding: 20px 50px;
+            text-align: center;
+        }
+
+        .square {
+            width: 150px;
+            height: 150px;
+            background-color: #f25;
+            float: left;
+            font-size: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1px;
+        }
+
+        .square:hover {
+            background-color: #00f;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game">
+        <div class="title" id="title">X O Game</div>
+        <div class="square" id="square1" onclick="game(this.id)"></div>
+        <div class="square" id="square2" onclick="game(this.id)"></div>
+        <div class="square" id="square3" onclick="game(this.id)"></div>
+        <div class="square" id="square4" onclick="game(this.id)"></div>
+        <div class="square" id="square5" onclick="game(this.id)"></div>
+        <div class="square" id="square6" onclick="game(this.id)"></div>
+        <div class="square" id="square7" onclick="game(this.id)"></div>
+        <div class="square" id="square8" onclick="game(this.id)"></div>
+        <div class="square" id="square9" onclick="game(this.id)"></div>
+    </div>
+    <script>
+        let turn = "x";
+        let count = 0;
+        let title = document.getElementById("title");
+        var squares = [];
+        function full() {
+            title.innerHTML = `Draw !`;
+            reload();
+        }
+        function reload() {
+            setInterval(function () {
+                title.innerHTML += ".";
+            }, 1000);
+            setTimeout(function () {
+                location.reload();
+            }, 4000);
+        }
+        function end(a, b, c) {
+            title.innerHTML = `${squares[a]} winn !`;
+            document.getElementById("square" + a).style.backgroundColor = "#00f";
+            document.getElementById("square" + b).style.backgroundColor = "#00f";
+            document.getElementById("square" + c).style.backgroundColor = "#00f";
+            reload();
+        }
+        function winner() {
+            count++;
+            for (let i = 1; i < 10; i++) {
+                squares[i] = document.getElementById("square" + i).innerHTML;
+            }
+            if (
+                squares[1] == squares[2] &&
+                squares[3] == squares[2] &&
+                squares[3] != ""
+            ) {
+                end(1, 2, 3);
+            } else if (
+                squares[4] == squares[5] &&
+                squares[6] == squares[5] &&
+                squares[6] != ""
+            ) {
+                end(4, 5, 6);
+            } else if (
+                squares[7] == squares[8] &&
+                squares[9] == squares[8] &&
+                squares[9] != ""
+            ) {
+                end(7, 8, 9);
+            } else if (
+                squares[1] == squares[4] &&
+                squares[7] == squares[4] &&
+                squares[7] != ""
+            ) {
+                end(1, 4, 7);
+            } else if (
+                squares[2] == squares[5] &&
+                squares[8] == squares[5] &&
+                squares[8] != ""
+            ) {
+                end(2, 5, 8);
+            } else if (
+                squares[3] == squares[6] &&
+                squares[9] == squares[6] &&
+                squares[9] != ""
+            ) {
+                end(3, 6, 9);
+            } else if (
+                squares[1] == squares[5] &&
+                squares[9] == squares[5] &&
+                squares[9] != ""
+            ) {
+                end(1, 5, 9);
+            } else if (
+                squares[3] == squares[5] &&
+                squares[7] == squares[5] &&
+                squares[7] != ""
+            ) {
+                end(3, 5, 7);
+            }
+            else if (count == 9) {
+                full();
+            }
+        }
+        function game(id) {
+            let element = document.getElementById(id);
+            if (turn === "x" && element.innerHTML == "") {
+                element.innerHTML = "X";
+                turn = "o";
+                title.innerHTML = "O   turn";
+            }
+            if (turn == "o" && element.innerHTML == "") {
+                element.innerHTML = "O";
+                turn = "x";
+                title.innerHTML = "X   turn";
+            }
+            winner();
+        }
+
+    </script>
+</body>
+
+</html>
